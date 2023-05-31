@@ -1,15 +1,43 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
+import { socket } from './socket';
+import { ConnectionState } from './components/ConnectionState';
+import { ConnectionManager } from './components/ConnectionManager';
+import { MyForm } from './components/MyForm';
 
-function App() {
+export default function App() {
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [fooEvents, setFooEvents] = useState([]);
+
+  useEffect(() => {
+    function onConnect() {
+      setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+
+    function onFooEvent(value) {
+      setFooEvents(previous => [...previous, value]);
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('foo', onFooEvent);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('foo', onFooEvent);
+    };
+  }, []);
+
   return (
-    <div>
-      <ul id="messages"></ul>
-      <form id="form" action="" className="fixed bottom-0 left-0 right-0 flex h-12 bg-opacity-40 backdrop-filter backdrop-blur-md">
-        <input id="input" autoComplete="off" className="border-none px-4 flex-grow rounded-l-md my-1" />
-        <button className="bg-gray-700 text-white px-4 rounded-r-md my-1">Send</button>
-      </form>
+    <div className="App">
+      <ConnectionState isConnected={ isConnected } />
+      <Events events={ fooEvents } />
+      <ConnectionManager />
+      <MyForm />
     </div>
   );
 }
-
-export default App;
