@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { socket } from './socket';
+import { socket } from './socket.js';
 import { ConnectionState } from './components/ConnectionState';
 import { ConnectionManager } from './components/ConnectionManager';
 import { MyForm } from './components/MyForm';
+import Events from './components/Events.js'
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
