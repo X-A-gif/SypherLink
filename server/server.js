@@ -3,6 +3,9 @@ const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 
+//Adding CORS from socket.io
+const cors = require('cors');
+
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
@@ -14,8 +17,15 @@ const server = new ApolloServer({
   context: authMiddleware,
 });
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+//Custom Middleware
 app.use(express.urlencoded({ extended: false }));
+app.use(cors(corsOptions));
 app.use(express.json());
+
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
