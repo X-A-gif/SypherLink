@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-server.listen(3000, () => {
+server.listen(3001, () => {
   console.log("SERVER IS RUNNING")
 });
 
