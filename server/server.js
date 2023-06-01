@@ -1,55 +1,52 @@
 const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
-const { authMiddleware } = require('./utils/auth');
+const http = require("http");
 
+const { Server } = require("socket.io");
 //Adding CORS from socket.io
 const cors = require('cors');
 
-const { typeDefs, resolvers } = require('./schemas');
-const db = require('./config/connection');
+// const { typeDefs, resolvers } = require('./schemas');
+// const db = require('./config/connection');
 
-const PORT = process.env.PORT || 3001;
+
 const app = express();
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authMiddleware,
+
+//Custom Middleware
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(cors());
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ["GET", "POST"],
+  },
 });
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true,
-};
-//Custom Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(cors(corsOptions));
-app.use(express.json());
+// Listening to events
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
 
+  socket.on("join_room", (data) => {
+    socket.join(data);
+  })
+  //Back end is listening to an event in the front end (send_message)
+  socket.on("send_message", (data) => {
+    //recieve the messages that were emitted by other people
+    //Then emits this data to the front end (receive_messages) function
+    socket.broadcast.emit("receive_message", data);
+    console.log(data);
+  });
+});
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-}
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
+server.listen(3000, () => {
+  console.log("SERVER IS RUNNING")
+});
 
-// Create a new instance of an Apollo server with the GraphQL schema
-const startApolloServer = async (typeDefs, resolvers) => {
-  await server.start();
-  server.applyMiddleware({ app });
-  
-  
-  db.once('open', () => {
-    app.listen(PORT, () => {
-      console.log(`API server running on port ${PORT}!`);
-      console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
-    })
-  })
-  };
-  console.log("Hello")
-  
-// Call the async function to start the server
-  startApolloServer(typeDefs, resolvers);
