@@ -16,6 +16,8 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1"
   }
 }
