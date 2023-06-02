@@ -80,12 +80,12 @@ export default function App() {
       <input placeholder='Room Number...' onChange={(event) => {
         setRoom(event.target.value);
       }}/>
-      <button onClick={joinRoom}>Join Room</button>
+      <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={joinRoom}>Join Room</button>
       <input placeholder="Message..." onChange={() => {
         //Grabbing the message value and setting it to the new message
         setMessage(event.target.value);
       }}/>
-      <button onClick={sendMessage}> Send Message</button>
+      <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={sendMessage}> Send Message</button>
       <h1>Message:</h1>
       {messageReceived}
     </div>
