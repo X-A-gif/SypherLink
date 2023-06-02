@@ -12,7 +12,7 @@ import {
    
   export default function Example() {
     return (
-      <Card className="fixed top-4 left-4 h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+      <Card className="flex top-0 left-0  h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       
         <List>
      
@@ -35,6 +35,7 @@ import {
             Log Out
           </ListItem>
         </List>
+
       </Card>
     );
   }
