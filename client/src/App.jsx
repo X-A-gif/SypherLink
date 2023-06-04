@@ -29,9 +29,9 @@ export default function App () {
     <div className='join-chat-container'>
     <h3>Join Chat</h3>
     <hr></hr>
-    <input type="text" placeholder='Name' onChange={(event) => {setUsername(target.event.value)}}/>
+    <input type="text" placeholder='Name' onChange={(event) => {setUsername(event.target.value)}}/>
     <hr></hr>
-    <input type="text" placeholder='Room ID..' onChange={(event) => {setRoom(target.event.value)}}/>
+    <input type="text" placeholder='Room ID..' onChange={(event) => {setRoom(event.target.value)}}/>
     <hr></hr>
     {/* On click the join room function is called */}
     <button onClick={joinRoom}>Join a room</button>
