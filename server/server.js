@@ -1,13 +1,13 @@
 const express = require('express');
 const path = require('path');
-const http = require("http");
+const http = require('http');
 
 //---------------------------------------------------------------
 const { ApolloServer } = require('apollo-server-express');
 const { authMiddleware } = require('./utils/auth');
 //---------------------------------------------------------------
 
-const { Server } = require("socket.io");
+const { Server } = require('socket.io');
 //Adding CORS from socket.io
 const cors = require('cors');
 //-------------------------------------------------------------------
@@ -17,7 +17,6 @@ const cors = require('cors');
 
 //-------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
-//const app = express();
 const server2 = new ApolloServer({
   typeDefs,
   resolvers,
@@ -37,6 +36,8 @@ app.use(express.json());
 //--------------------------------------------------------------
 
 const server = http.createServer(app);
+app.use(cors());
+
 
 const io = new Server(server, {
   cors: {
@@ -45,19 +46,26 @@ const io = new Server(server, {
   },
 });
 
-// Listening to events
-io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+//Listening for for an event with the name connection and calling a callback function
+io.on('connection', (socket) => {
+  console.log('User Connected: ', socket.id);
 
-  socket.on("join_room", (data) => {
+  //Listening for when someone wants to join a room
+  // This takes the room data as data and allows the user to join
+  socket.on('join_room', (data) => {
     socket.join(data);
-  })
-  //Back end is listening to an event in the front end (send_message)
-  socket.on("send_message", (data) => {
-    //recieve the messages that were emitted by other people
-    //Then emits this data to the front end (receive_messages) function
-    socket.broadcast.emit("receive_message", data);
-    console.log(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+
+  //Listening for when the user wants to disconnect
+  socket.on('disconnect', () => {
+    console.log('User Disconnected', socket.id);
+  });
+
+  //Listening event for sending a message
+  socket.on('send_message', (data) => {
+   // When someone types a message they emit the data here and the message is received
+   socket.to(data.room).emit('receive_message', data);
   });
 });
 
@@ -66,11 +74,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
 //----------------------------------------------------------------------
-
-
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-// });
 
 
 //--------------------------------------------------------------
