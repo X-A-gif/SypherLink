@@ -6,6 +6,11 @@ import ChatRoom from './components/ChatRoom';
 const socket = io.connect('http://localhost:3001');
 
 export default function App () {
+// Use this to emit events whenever we need
+// Importing useEffect Hook
+import SideBar from './components/SideBar';
+import Inputbox from './components/Inputbox';
+import Joinbox from './components/Joinbox';
 
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
