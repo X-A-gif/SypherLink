@@ -1,13 +1,13 @@
 const express = require('express');
 const path = require('path');
-const http = require("http");
+const http = require('http');
 
 //---------------------------------------------------------------
 const { ApolloServer } = require('apollo-server-express');
 const { authMiddleware } = require('./utils/auth');
 //---------------------------------------------------------------
 
-const { Server } = require("socket.io");
+const { Server } = require('socket.io');
 //Adding CORS from socket.io
 const cors = require('cors');
 //-------------------------------------------------------------------
@@ -17,7 +17,6 @@ const cors = require('cors');
 
 //-------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
-//const app = express();
 const server2 = new ApolloServer({
   typeDefs,
   resolvers,
@@ -75,11 +74,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
 //----------------------------------------------------------------------
-
-
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-// });
 
 
 //--------------------------------------------------------------

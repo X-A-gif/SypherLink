@@ -1,6 +1,9 @@
 import io from 'socket.io-client';
 import { useState } from 'react';
 import ChatRoom from './components/ChatRoom';
+// import SideBar from './components/SideBar';
+// import Inputbox from './components/Inputbox';
+// import Joinbox from './components/Joinbox';
 
 // Connecting the front end to the back end
 const socket = io.connect('http://localhost:3001');
@@ -8,10 +11,6 @@ const socket = io.connect('http://localhost:3001');
 export default function App () {
 // Use this to emit events whenever we need
 // Importing useEffect Hook
-import SideBar from './components/SideBar';
-import Inputbox from './components/Inputbox';
-import Joinbox from './components/Joinbox';
-
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   // creating use state to only show chat if you joined a room
