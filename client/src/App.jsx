@@ -2,7 +2,9 @@ import io from 'socket.io-client';
 import { useState } from 'react';
 import ChatRoom from './components/ChatRoom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import LoginPage from './components/Login';
+import SideBar from './components/SideBar';
 
 //-----------------------------------------------------------------------
 import {
@@ -69,6 +71,8 @@ export default function App() {
                 <ChatRoom socket={socket} username={username} room={room} />
               ) : (
                 <div className='join-chat-container'>
+                  <SideBar />
+
                   <h3>Join Chat</h3>
                   <hr></hr>
                   <input
