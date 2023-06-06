@@ -9,7 +9,7 @@ import SideBar from './SideBar.js';
 
 //Takes socket, the username of the person and the room
 function ChatRoom({ socket, username, room }) {
-
+console.log(username);
   const [currentMessage, setCurrentMessage] = useState('');
   //We want to add a new message to the array
   const [messageList, setMessageList] = useState([]);
