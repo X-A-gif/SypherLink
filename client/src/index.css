@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.chat-footer{
+    padding-left: 25rem;
+}
