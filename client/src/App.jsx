@@ -4,6 +4,8 @@ import ChatRoom from './components/ChatRoom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import LoginPage from './components/Login';
+import SignupPage from './components/Signup';
+
 
 //-----------------------------------------------------------------------
 import {
@@ -63,6 +65,7 @@ export default function App() {
       <div className="App">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route
             path="/"
             element={
