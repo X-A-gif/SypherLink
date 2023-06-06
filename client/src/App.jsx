@@ -1,9 +1,6 @@
 import io from 'socket.io-client';
 import { useState } from 'react';
 import ChatRoom from './components/ChatRoom';
-// import SideBar from './components/SideBar';
-// import Inputbox from './components/Inputbox';
-// import Joinbox from './components/Joinbox';
 
 // Connecting the front end to the back end
 const socket = io.connect('http://localhost:3001');
@@ -28,7 +25,7 @@ export default function App () {
 
   return(
     <>
-    <div className='App'>
+    <div className='App bg-slate-900'>
       {!showChat ? (
     <div className='join-chat-container'>
     <h3>Join Chat</h3>
@@ -38,7 +35,11 @@ export default function App () {
     <input type="text" placeholder='Room ID..' onChange={(event) => {setRoom(event.target.value)}}/>
     <hr></hr>
     {/* On click the join room function is called */}
-    <button onClick={joinRoom}>Join a room</button>
+    <button className="rounded-md 
+    bg-indigo-600 px-3 py-2 text-sm font-semibold text-white 
+    shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
+    focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
+    onClick={joinRoom}>Join a room</button>
     </div>
       )
   : (
