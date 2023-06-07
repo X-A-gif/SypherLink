@@ -51,17 +51,3 @@ export default function App() {
     </ApolloProvider>
   );
 }
-
-
-
- // <div className='join-chat-container'>
-                  //   <h3>Join Chat</h3>
-                   
-                  //   <input
-                  //     type="text"
-                  //     placeholder='Room ID..'
-                  //     onChange={(event) => { setRoom(event.target.value) }}
-                  //   />
-                  //   <hr></hr>
-                  //   <button onClick={joinRoom}>Join a room</button>
-                  // </div>

@@ -4,7 +4,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { v4 as uuidv4 } from 'uuid';
 import { useQuery } from '@apollo/client';
 import { GET_USERNAME } from '../utils/queries.js';
-import io from 'socket.io-client';
+
 
 
 import SideBar from './SideBar.js';
@@ -13,26 +13,11 @@ import SideBar from './SideBar.js';
 
 
 //Takes socket, the username of the person and the room
-function ChatRoom() {
+function ChatRoom({socket, room}) {
 
   const [currentMessage, setCurrentMessage] = useState('');
-  //We want to add a new message to the array
-  const socket = io.connect('http://localhost:3001');
 
   const [messageList, setMessageList] = useState([]);
-
-  const [room, setRoom] = useState('');
-
-  const [showChat, setShowChat] = useState(false);
-
-  console.log(showChat);
-
-  useEffect(() => {
-    if (room !== '') {
-      socket.emit('join_room', room);
-      setShowChat(true);
-    }
-  }, []);
 
 
   //Listening from the front end to send stuff to the back end
@@ -91,13 +76,6 @@ function ChatRoom() {
     <>
       <div className='chat-header absolute text-black left-0 right-0 grid place-items-center'>
         <p className='text-3xl'>Live Chat</p>
-        <input type="text" placeholder='Room ID..' 
-          value={room}
-          // set current message to the value
-          onChange={(event) => { setRoom(event.target.value) }}
-          
-        />
-
       </div>
       <SideBar />
       <div className='absolute bottom-0 left-0 right-0 grid place-items-center'>
@@ -160,7 +138,7 @@ function ChatRoom() {
 //Declaring the prop types
 ChatRoom.propTypes = {
   socket: PropTypes.object.isRequired,
-  username: PropTypes.string.isRequired,
+  // username: PropTypes.string.isRequired,
   room: PropTypes.string.isRequired,
 };
 
