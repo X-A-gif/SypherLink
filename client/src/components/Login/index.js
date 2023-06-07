@@ -11,7 +11,6 @@ const Login = () => {
   
   const [email, setEmail] = useState("");  
   const [password, setPassword] = useState("");
-  const [showChat, setShowChat] = useState(false);
   
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER);

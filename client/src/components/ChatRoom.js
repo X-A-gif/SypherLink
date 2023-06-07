@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import { GET_USERNAME } from '../utils/queries.js';
 import io from 'socket.io-client';
 
+
 import SideBar from './SideBar.js';
 // import Inputbox from './Inputbox';
 // import Joinbox from './components/Joinbox';
@@ -22,12 +23,16 @@ function ChatRoom() {
 
   const [room, setRoom] = useState('');
 
+  const [showChat, setShowChat] = useState(false);
 
-  if (room !== '') {
-    socket.emit('join_room', room);
-    setShowChat(true);
-  }
+  console.log(showChat);
 
+  useEffect(() => {
+    if (room !== '') {
+      socket.emit('join_room', room);
+      setShowChat(true);
+    }
+  }, []);
 
 
   //Listening from the front end to send stuff to the back end
@@ -58,7 +63,7 @@ function ChatRoom() {
   
   console.log(data);
 
-  const username = data && data.username ? data.username : '';
+  const username = data && data.username.username ? data.username.username : '';
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
@@ -84,9 +89,14 @@ function ChatRoom() {
 
   return (
     <>
-      <div className='chat-header absolute text-white left-0 right-0 grid place-items-center'>
+      <div className='chat-header absolute text-black left-0 right-0 grid place-items-center'>
         <p className='text-3xl'>Live Chat</p>
-        <input type="text" placeholder='Room ID..' onChange={(event) => {setRoom(event.target.value)}}/>
+        <input type="text" placeholder='Room ID..' 
+          value={room}
+          // set current message to the value
+          onChange={(event) => { setRoom(event.target.value) }}
+          
+        />
 
       </div>
       <SideBar />
