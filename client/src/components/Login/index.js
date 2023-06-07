@@ -3,11 +3,21 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations.js";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
 
+import Auth from "../../utils/auth.js";
+import ChatRoom from "../ChatRoom.js";
+
 const Login = () => {
   const navigate = useNavigate(); // Create a navigate function
-  const [email, setEmail] = useState("");
+  
+  const [email, setEmail] = useState("");  
   const [password, setPassword] = useState("");
+  const [showChat, setShowChat] = useState(false);
+  
+
   const [loginUser, { loading }] = useMutation(LOGIN_USER);
+
+  console.log(Auth.loggedIn());
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,6 +34,8 @@ const Login = () => {
       const username = data.login.user.username;
       console.log(userId, username);
 
+      Auth.login(data.login.token);
+
       // Redirect to the home page
       navigate("/"); // Replace "/" with the desired home page URL
 
@@ -33,7 +45,10 @@ const Login = () => {
   };
 
   return (
-    <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
+    Auth.loggedIn() ? (
+      <ChatRoom />
+    ):(
+      <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
       <div className="md:w-1/3 max-w-sm">
         <input
           className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
@@ -61,6 +76,7 @@ const Login = () => {
         </div>
       </div>
     </section>
+    )
   );
 };
 

@@ -8,7 +8,6 @@ const typeDefs = gql`
     password: String
   }
 
-
   # Set up an Auth type to handle returning data from a profile creating or user login
   type Auth {
     token: ID!
@@ -20,11 +19,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
-   
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     }
-
 `;
 
 module.exports = typeDefs;

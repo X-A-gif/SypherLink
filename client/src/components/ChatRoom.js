@@ -4,17 +4,31 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { v4 as uuidv4 } from 'uuid';
 import { useQuery } from '@apollo/client';
 import { GET_USERNAME } from '../utils/queries.js';
+import io from 'socket.io-client';
 
 import SideBar from './SideBar.js';
 // import Inputbox from './Inputbox';
 // import Joinbox from './components/Joinbox';
 
+
 //Takes socket, the username of the person and the room
-function ChatRoom({ socket, room }) {
+function ChatRoom() {
 
   const [currentMessage, setCurrentMessage] = useState('');
   //We want to add a new message to the array
+  const socket = io.connect('http://localhost:3001');
+
   const [messageList, setMessageList] = useState([]);
+
+  const [room, setRoom] = useState('');
+
+
+  if (room !== '') {
+    socket.emit('join_room', room);
+    setShowChat(true);
+  }
+
+
 
   //Listening from the front end to send stuff to the back end
   //This function will be called when ever there is a change in our socket server
@@ -72,6 +86,8 @@ function ChatRoom({ socket, room }) {
     <>
       <div className='chat-header absolute text-white left-0 right-0 grid place-items-center'>
         <p className='text-3xl'>Live Chat</p>
+        <input type="text" placeholder='Room ID..' onChange={(event) => {setRoom(event.target.value)}}/>
+
       </div>
       <SideBar />
       <div className='absolute bottom-0 left-0 right-0 grid place-items-center'>
@@ -81,7 +97,7 @@ function ChatRoom({ socket, room }) {
         <div className='chat-body w-3/5'>
           <ScrollToBottom>
             {messageList.map((messageContent) => {
-
+              
               // Content 
               // const messageData = {
               //   room: room,
@@ -104,6 +120,7 @@ function ChatRoom({ socket, room }) {
                       <div className='message-meta'>
                         <p id="time" className='text-white' >{messageContent.time}</p>
                       </div>
+
                     </div>
                   </div>
                 </div>
