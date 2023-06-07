@@ -22,9 +22,9 @@ const Signup = () => {
         },
       });
 
-    //   const userId = data.login.user._id;
-    //   const username2 = data.login.user.username;
-    //   console.log(userId, username2);
+      const userId = data.login.user._id;
+      const username2 = data.login.user.username;
+      console.log(userId, username2);
 
       // Redirect to the home page
       navigate("/"); // Replace "/" with the desired home page URL
