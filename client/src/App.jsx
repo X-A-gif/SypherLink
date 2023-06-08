@@ -1,52 +1,53 @@
 import io from 'socket.io-client';
 import { useState } from 'react';
 import ChatRoom from './components/ChatRoom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Auth from './utils/auth';
 
-// Connecting the front end to the back end
-const socket = io.connect('http://localhost:3001');
 
-export default function App () {
-// Use this to emit events whenever we need
-// Importing useEffect Hook
-  const [username, setUsername] = useState('');
-  const [room, setRoom] = useState('');
-  // creating use state to only show chat if you joined a room
-  const [showChat, setShowChat] = useState(false);
+import LoginPage from './components/Login';
+import SignupPage from './components/Signup';
 
-  const joinRoom = () => {
-    if(username !== '' && room !== '') {
-      // If a username and room # exist we pass the room to join room
-      // This is sent to the back end to activate the event listerner join_room
-        socket.emit("join_room", room);
-        //Whenever join room is true then the chat will be visibile 
-        setShowChat(true);
-    }
-  }
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-  return(
-    <>
-    <div className='App bg-slate-900'>
-      {!showChat ? (
-    <div className='join-chat-container'>
-    <h3>Join Chat</h3>
-    <hr></hr>
-    <input type="text" placeholder='Name' onChange={(event) => {setUsername(event.target.value)}}/>
-    <hr></hr>
-    <input type="text" placeholder='Room ID..' onChange={(event) => {setRoom(event.target.value)}}/>
-    <hr></hr>
-    {/* On click the join room function is called */}
-    <button className="rounded-md 
-    bg-indigo-600 px-3 py-2 text-sm font-semibold text-white 
-    shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
-    focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
-    onClick={joinRoom}>Join a room</button>
-    </div>
-      )
-  : (
-    <ChatRoom socket={socket} username={username} room={room} />
-  ) }
-  {/* Line 39 is Passing socket into the ChatRoom component */}
-    </div>
-    </>
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
+
+export default function App() {
+
+  return (
+    <ApolloProvider client={client}>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+          </Routes>
+        </div>
+      </Router>
+    </ApolloProvider>
   );
 }
