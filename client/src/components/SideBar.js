@@ -9,6 +9,8 @@ import {
     Cog6ToothIcon,
     PowerIcon,
   } from "@heroicons/react/24/solid";
+  import { NavLink } from "react-router-dom"
+  import Auth from "../utils/auth.js";
    
   export default function Example() {
     return (
@@ -33,7 +35,8 @@ import {
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5 text-white" />
             </ListItemPrefix>
-            Log Out
+            <NavLink onClick={Auth.logout}>Logout</NavLink>
+
           </ListItem>
         </List>
 
