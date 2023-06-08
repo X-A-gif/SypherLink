@@ -69,9 +69,6 @@ function ChatRoom({socket, room}) {
     }
   };
 
-
-  
-
   return (
     <>
       <div className='chat-header absolute text-black left-0 right-0 grid place-items-center'>
