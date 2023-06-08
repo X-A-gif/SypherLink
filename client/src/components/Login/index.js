@@ -4,7 +4,7 @@ import { LOGIN_USER } from "../../utils/mutations.js";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
 
 import Auth from "../../utils/auth.js";
-import ChatRoom from "../ChatRoom.js";
+import JoinRoom from "../JoinRoom.js";
 
 const Login = () => {
   const navigate = useNavigate(); // Create a navigate function
@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     Auth.loggedIn() ? (
-      <ChatRoom />
+      <JoinRoom />
     ):(
       <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
       <div className="md:w-1/3 max-w-sm">
