@@ -4,7 +4,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { v4 as uuidv4 } from 'uuid';
 import { useQuery } from '@apollo/client';
 import { GET_USERNAME } from '../utils/queries.js';
-
+import SVGComponent from '../assets/SVGComponent.jsx';
 
 
 import SideBar from './SideBar.js';
@@ -13,7 +13,7 @@ import SideBar from './SideBar.js';
 
 
 //Takes socket, the username of the person and the room
-function ChatRoom({socket, room}) {
+function ChatRoom({ socket, room }) {
 
   const [currentMessage, setCurrentMessage] = useState('');
 
@@ -45,7 +45,7 @@ function ChatRoom({socket, room}) {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-  
+
   console.log(data);
 
   const username = data && data.username.username ? data.username.username : '';
@@ -82,7 +82,7 @@ function ChatRoom({socket, room}) {
         <div className='chat-body w-3/5'>
           <ScrollToBottom>
             {messageList.map((messageContent) => {
-              
+
               // Content 
               // const messageData = {
               //   room: room,
@@ -99,12 +99,13 @@ function ChatRoom({socket, room}) {
                   <div className='py-3'>
                     <div className=' bg-slate-500 p-3 rounded-lg'>
                       <div className='message-content'>
-                        <p id="author" className='text-5xl text-white font-semibold'>{messageContent.author}</p>
                         <p className='text-4xl left-30 bottom-0 text-white'>{messageContent.message}</p>
                       </div>
-                      <div className='message-meta'>
-                        <p id="time" className='text-white' >{messageContent.time}</p>
+                      <div className='mt-2 message-meta flex flex-row'>
+                        <p id="author" className='text-white flex-grow'>{messageContent.author}</p>
+                        <p id="time" className='text-white text-right'>{messageContent.time}</p>
                       </div>
+
 
                     </div>
                   </div>
