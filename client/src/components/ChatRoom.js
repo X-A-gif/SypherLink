@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import ScrollToBottom from "react-scroll-to-bottom";
-import { v4 as uuidv4 } from "uuid";
-import { useQuery } from "@apollo/client";
-import { GET_USERNAME } from "../utils/queries.js";
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import ScrollToBottom from 'react-scroll-to-bottom';
+import { v4 as uuidv4 } from 'uuid';
+import { useQuery } from '@apollo/client';
+import { GET_USERNAME } from '../utils/queries.js';
+import SVGComponent from '../assets/SVGComponent.jsx';
 
-import SideBar from "./SideBar.js";
+
+import SideBar from './SideBar.js';
 // import Inputbox from './Inputbox';
 // import Joinbox from './components/Joinbox';
 
 //Takes socket, the username of the person and the room
 function ChatRoom({ socket, room }) {
-  const [currentMessage, setCurrentMessage] = useState("");
+
+  const [currentMessage, setCurrentMessage] = useState('');
 
   const [messageList, setMessageList] = useState([]);
 
@@ -79,7 +82,8 @@ function ChatRoom({ socket, room }) {
         <div className="chat-body w-3/5">
           <ScrollToBottom>
             {messageList.map((messageContent) => {
-              // Content
+
+              // Content 
               // const messageData = {
               //   room: room,
               //   author: username,
@@ -91,29 +95,18 @@ function ChatRoom({ socket, room }) {
               //So we are only taking the message (currentMessage)
               return (
                 //Creating the id other and you to use in css
-                <div
-                  className="message-container"
-                  id={username === messageContent.author ? "you" : "other"}
-                  key={messageContent.id}
-                >
-                  <div className="py-3">
-                    <div className=" bg-slate-500 p-3 rounded-lg">
-                      <div className="message-content">
-                        <p
-                          id="author"
-                          className="text-5xl text-white font-semibold"
-                        >
-                          {messageContent.author}
-                        </p>
-                        <p className="text-4xl left-30 bottom-0 text-white">
-                          {messageContent.message}
-                        </p>
+                <div className='message-container' id={username === messageContent.author ? "you" : "other"} key={messageContent.id}>
+                  <div className='py-3'>
+                    <div className=' bg-slate-500 p-3 rounded-lg'>
+                      <div className='message-content'>
+                        <p className='text-4xl left-30 bottom-0 text-white'>{messageContent.message}</p>
                       </div>
-                      <div className="message-meta">
-                        <p id="time" className="text-white">
-                          {messageContent.time}
-                        </p>
+                      <div className='mt-2 message-meta flex flex-row'>
+                        <p id="author" className='text-white flex-grow'>{messageContent.author}</p>
+                        <p id="time" className='text-white text-right'>{messageContent.time}</p>
                       </div>
+
+
                     </div>
                   </div>
                 </div>
