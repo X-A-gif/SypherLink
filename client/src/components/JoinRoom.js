@@ -24,28 +24,37 @@ export default function App () {
     }
   }
 
-  return(
-    <>
-    <div className='App bg-slate-900'>
-      {!showChat ? (
-    <div className='join-chat-container'>
-    <h3>Join Chat</h3>
-    <hr></hr>
-    <input type="text" placeholder='Room ID..' onChange={(event) => {setRoom(event.target.value)}}/>
-    <hr></hr>
-    {/* On click the join room function is called */}
-    <button className="rounded-md 
+  return (
+    <div className="justify-center bg-slate-900 bg-auto">
+      <div className="App bg-slate-900">
+        {!showChat ? (
+          <div className="justify-center join-chat-container">
+            <h3>Join Chat</h3>
+            <hr></hr>
+            <input
+              type="text"
+              placeholder="Room ID.."
+              onChange={(event) => {
+                setRoom(event.target.value);
+              }}
+            />
+            <hr></hr>
+            {/* On click the join room function is called */}
+            <button
+              className="rounded-md 
     bg-indigo-600 px-3 py-2 text-sm font-semibold text-white 
     shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
-    focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
-    onClick={joinRoom}>Join a room</button>
+    focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={joinRoom}
+            >
+              Join a room
+            </button>
+          </div>
+        ) : (
+          <ChatRoom socket={socket} room={room} />
+        )}
+        {/* Line 45 is Passing socket into the ChatRoom component */}
+      </div>
     </div>
-      )
-  : (
-    <ChatRoom socket={socket} room={room} />
-  ) }
-  {/* Line 45 is Passing socket into the ChatRoom component */}
-    </div>
-    </>
   );
 }

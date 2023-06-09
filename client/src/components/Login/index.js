@@ -43,7 +43,7 @@ const Login = () => {
   return Auth.loggedIn() ? (
     <JoinRoom />
   ) : (
-    <div className="h-screen bg-slate-500 flex justify-center items-center">
+    <div className="h-screen bg-slate-900 flex justify-center items-center">
       <section className="my-auto flex flex-col w-full">
       <div className="flex flex-col justify-center items-center space-y-10">
       <div className=" w-[600px] h-[500px] flex justify-center m-0">
