@@ -122,7 +122,7 @@ function ChatRoom({ socket, room }) {
             {/* You need to specify the css properties for this, this is to let the page scroll down automatically when a new message is sent */}
           </ScrollToBottom>
         </div>
-        <div className="chat-footer w-full mx-auto pl-20 bg-slate-900">
+        <div className="chat-footer w-full mx-auto xl:pl-20 lg:pl-17 md:pl-15 sm:pl-12 xs:pl-8 bg-slate-900">
           <input
             type="text"
             className="w-5/6 rounded-l-lg py-2 bg-slate-700 text-white"
