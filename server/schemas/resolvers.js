@@ -1,4 +1,4 @@
-const { User, Book } = require('../models');
+const { User, Chats } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
@@ -6,7 +6,7 @@ const resolvers = {
   Query: {
     username: async (parent, args, context) => {
       if (context.user) {
-       return User.findOne({ _id: context.user._id });
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -18,7 +18,6 @@ const resolvers = {
 
       return { token, user };
     },
-
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -35,12 +34,19 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
-
-      
     },
 
-  }
+    saveChat: async (parent, { chat, sentBy }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('cant save chat');
+      }
+      
+      const newChat = await Chats.create({ chat, sentBy });
 
+
+      return newChat;
+    },
+  },  
 };
 
 module.exports = resolvers;

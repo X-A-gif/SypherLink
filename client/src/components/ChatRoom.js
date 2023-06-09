@@ -2,41 +2,28 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { v4 as uuidv4 } from 'uuid';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_USERNAME } from '../utils/queries.js';
-
-
+import { SAVE_CHAT } from '../utils/mutations.js';
 
 import SideBar from './SideBar.js';
-// import Inputbox from './Inputbox';
-// import Joinbox from './components/Joinbox';
 
-
-//Takes socket, the username of the person and the room
-function ChatRoom({socket, room}) {
-
+function ChatRoom({ socket, room }) {
   const [currentMessage, setCurrentMessage] = useState('');
-
   const [messageList, setMessageList] = useState([]);
 
+  const { loading, error, data } = useQuery(GET_USERNAME);
 
-  //Listening from the front end to send stuff to the back end
-  //This function will be called when ever there is a change in our socket server
+  // Mutation to save the chat
+  const [saveChat, { rError, rData }] = useMutation(SAVE_CHAT);
+
   useEffect(() => {
-
-    // Remove the previous event listener, if any
     socket.off('receive_message');
-
-    //Listening for the emit in the server
     socket.on('receive_message', (data) => {
-      // Whenever a message is sent
-      // it sets the message list array to whatever is inputted along with the previous list information
       console.log('Received message:', data);
       setMessageList((list) => [...list, data]);
     });
   }, [socket]);
-
-  const { loading, error, data } = useQuery(GET_USERNAME);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -45,27 +32,25 @@ function ChatRoom({socket, room}) {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-  
-  console.log(data);
 
   const username = data && data.username.username ? data.username.username : '';
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
-      // taking in all the messages in an object to send back the object later
       const messageData = {
-        id: uuidv4(), //Generates a unique ID
+        id: uuidv4(),
         room: room,
         author: username,
         message: currentMessage,
-        // gets the current hour and minutes
-        time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
+        time: new Date(Date.now()).getHours() + ':' + new Date(Date.now()).getMinutes(),
       };
 
       await socket.emit('send_message', messageData);
-      // it sets the message list array to whatever is inputted along with the previous list information
       setMessageList((list) => [...list, messageData]);
-      setCurrentMessage("")
+      setCurrentMessage('');
+
+       // Save the chat message to the server
+      await saveChat({ variables: { chat: currentMessage, sentBy: username } });
     }
   };
 
@@ -83,15 +68,7 @@ function ChatRoom({socket, room}) {
           <ScrollToBottom>
             {messageList.map((messageContent) => {
               
-              // Content 
-              // const messageData = {
-              //   room: room,
-              //   author: username,
-              //   message: currentMessage,
-
-              //   time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
-              // }
-
+       
               //So we are only taking the message (currentMessage)
               return (
                 //Creating the id other and you to use in css
@@ -130,12 +107,11 @@ function ChatRoom({socket, room}) {
       </div>
     </>
   );
-}
+} 
 
 //Declaring the prop types
 ChatRoom.propTypes = {
   socket: PropTypes.object.isRequired,
-  // username: PropTypes.string.isRequired,
   room: PropTypes.string.isRequired,
 };
 
