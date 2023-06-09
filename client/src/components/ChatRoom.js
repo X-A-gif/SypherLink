@@ -4,7 +4,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { v4 as uuidv4 } from 'uuid';
 import { useQuery } from '@apollo/client';
 import { GET_USERNAME } from '../utils/queries.js';
-import SVGComponent from '../assets/SVGComponent.jsx';
+import Logo from '../assets/test-sypherlink-logo.svg'; //Logo
 
 
 import SideBar from './SideBar.js';
@@ -71,8 +71,10 @@ function ChatRoom({ socket, room }) {
 
   return (
     <>
-      <div className="chat-header absolute text-black left-0 right-0 grid place-items-center">
-        <p className="text-3xl">Live Chat</p>
+      <div className="chat-header absolute text-black left-0 right-0 grid place-items-center mt-[-80px]">
+        <div className='flex justify-center items-center w-64 h-64'>
+          <img src={Logo} className='w-64 h-64' />
+        </div>
       </div>
       <SideBar />
       <div className="absolute bottom-0 left-0 right-0 grid place-items-center">
