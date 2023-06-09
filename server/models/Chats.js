@@ -10,6 +10,10 @@ const chatsSchema = new Schema(
             type: String,
             required: true,
         },
+        roomID: {
+            type: Number,
+            required: true,
+        },
     },
     {
         toJSON: {

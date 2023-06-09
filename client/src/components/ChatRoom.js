@@ -48,9 +48,10 @@ function ChatRoom({ socket, room }) {
       await socket.emit('send_message', messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage('');
-
-       // Save the chat message to the server
-      await saveChat({ variables: { chat: currentMessage, sentBy: username } });
+      
+      // Save the chat message to the server
+      console.log(room)
+      await saveChat({ variables: { chat: currentMessage, sentBy: username, roomID: room } });
     }
   };
 

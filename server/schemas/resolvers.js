@@ -36,13 +36,12 @@ const resolvers = {
       return { token, user };
     },
 
-    saveChat: async (parent, { chat, sentBy }, context) => {
+    saveChat: async (parent, { chat, sentBy, roomID }, context) => {
       if (!context.user) {
         throw new AuthenticationError('cant save chat');
       }
       
-      const newChat = await Chats.create({ chat, sentBy });
-
+      const newChat = await Chats.create({ chat, sentBy, roomID });
 
       return newChat;
     },

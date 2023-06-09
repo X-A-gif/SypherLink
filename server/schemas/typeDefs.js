@@ -12,6 +12,7 @@ const typeDefs = gql`
     _id: ID
     chat: String
     sentBy: String
+    roomID: String
   }
 
   type Auth {
@@ -25,7 +26,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    saveChat(chat: String!, sentBy: String!): Chat
+    saveChat(chat: String!, sentBy: String!, roomID: String!): Chat
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
   }
