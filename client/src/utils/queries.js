@@ -8,3 +8,14 @@ export const GET_USERNAME = gql`
     }
   }
 `;
+export const GET_CHATS = gql`
+  query GET_CHATS {
+    chats {  
+      _id
+      chat
+      sentBy
+      roomID
+    }
+  }
+`;
+

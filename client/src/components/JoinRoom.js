@@ -12,6 +12,8 @@ export default function App () {
   // creating use state to only show chat if you joined a room
   const [showChat, setShowChat] = useState(false);
 
+  const roomID = roomID || uuidv4();
+
   console.log(showChat);
 
   const joinRoom = () => {
@@ -29,7 +31,7 @@ export default function App () {
     <div className='App bg-slate-900'>
       {!showChat ? (
     <div className='join-chat-container'>
-    <h3>Join Chat</h3>
+    <h3>Join Chat</h3>  
     <hr></hr>
     <input type="text" placeholder='Room ID..' onChange={(event) => {setRoom(event.target.value)}}/>
     <hr></hr>
@@ -42,7 +44,7 @@ export default function App () {
     </div>
       )
   : (
-    <ChatRoom socket={socket} room={room} />
+    <ChatRoom socket={socket} room={room} roomID={roomID} />
   ) }
   {/* Line 45 is Passing socket into the ChatRoom component */}
     </div>

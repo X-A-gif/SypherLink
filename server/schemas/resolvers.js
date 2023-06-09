@@ -10,6 +10,12 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    chats: async (parent, room, context) => {
+      if (context.user) {
+        return Chats.find({ roomID: room });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    }
   },
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
