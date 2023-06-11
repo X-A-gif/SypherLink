@@ -10,7 +10,7 @@ import Auth from "../utils/auth.js";
 export default function Example() {
   return (
     <div>
-      <Card className="bg-slate-800 flex top-0 left-0  h-[calc(100vh-2rem)] w-full max-w-[20rem] xl:max-w-[15rem] lg:max-w-[10rem] md:max-w-[10rem] sm:max-w-[7rem] xs:max-w-[5rem] p-4 shadow-xl shadow-blue-gray-900/5">
+      <Card className="absolute bg-slate-800 flex top-0 left-0  h-[calc(100vh-2rem)] w-full max-w-[20rem] xl:max-w-[15rem] lg:max-w-[10rem] md:max-w-[10rem] sm:max-w-[7rem] xs:max-w-[5rem] p-4 shadow-xl shadow-blue-gray-900/5">
         <List>
           <ListItem className="text-white">
             <ListItemPrefix>
