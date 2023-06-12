@@ -5,13 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_USERNAME } from '../utils/queries.js';
 import { SAVE_CHAT } from '../utils/mutations.js';
-
-import SideBar from './SideBar.js';
-
-function ChatRoom({ socket, room }) {
 import Logo from '../assets/test-sypherlink-logo.svg'; //Logo
 
-
+import SideBar from './SideBar.js';
 
 //Takes socket, the username of the person and the room
 function ChatRoom({ socket, room }) {
@@ -152,6 +148,3 @@ ChatRoom.propTypes = {
 };
 
 export default ChatRoom;
-
-
-
