@@ -3,11 +3,13 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
   PowerIcon,
+  ArrowUturnLeftIcon,
 } from "@heroicons/react/24/solid";
 import { NavLink } from "react-router-dom";
 import Auth from "../utils/auth.js";
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
+import JoinRoom from '../components/JoinRoom.js';
 
 function Modal({ showModal, onClose }) {
   return (
@@ -36,10 +38,14 @@ Modal.propTypes = {
 
 export default function SideBar() {
   const [showModal, setShowModal] = useState(false);
-
+  
   const featureModal = () => {
     setShowModal(!showModal);
   };
+
+    const handleRefreshClick = () => {
+      window.location.reload();
+    };
 
   return (
     <div>
@@ -59,6 +65,18 @@ export default function SideBar() {
             </ListItemPrefix>
             <p className="sm:opacity-100 xs:opacity-0">Settings</p>
             <Modal showModal={showModal} onClose={featureModal} />
+          </ListItem>
+
+          <ListItem className="text-white">
+            <ListItemPrefix>
+              <ArrowUturnLeftIcon onClick={handleRefreshClick} className="h-5 w-5 text-white" />
+            </ListItemPrefix>
+            <NavLink
+              onClick={handleRefreshClick}
+              className="sm:opacity-100 xs:opacity-0"
+            >
+              Find A Room
+            </NavLink>
           </ListItem>
 
           <ListItem className="text-white">

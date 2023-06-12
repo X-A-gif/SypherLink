@@ -73,7 +73,7 @@ function ChatRoom({ socket, room }) {
           <img src={Logo} className='w-64 h-64' />
         </div>
       </div>
-      <SideBar />
+      {/* <SideBar /> */}
       <div className="absolute bottom-0 left-0 right-0 grid place-items-center">
         {/* <div className='chat-header'>
         <p>Live Chat</p>
