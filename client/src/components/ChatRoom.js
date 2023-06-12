@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useQuery } from '@apollo/client';
 import { GET_USERNAME } from '../utils/queries.js';
 import Logo from '../assets/test-sypherlink-logo.svg'; //Logo
-import SideBar from './SideBar.js';
+
 
 
 //Takes socket, the username of the person and the room
