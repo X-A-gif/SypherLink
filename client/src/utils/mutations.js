@@ -22,3 +22,13 @@ export const ADD_USER = gql`
     }
   }
 `;
+export const SAVE_CHAT = gql`
+  mutation saveChat($chat: String!, $sentBy: String!, $roomID: String!) {
+    saveChat(chat: $chat, sentBy: $sentBy, roomID: $roomID) {
+      _id
+      chat
+      sentBy
+      roomID
+    }
+  }
+`;

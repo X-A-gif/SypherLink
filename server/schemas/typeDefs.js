@@ -8,7 +8,13 @@ const typeDefs = gql`
     password: String
   }
 
-  # Set up an Auth type to handle returning data from a profile creating or user login
+  type Chat {
+    _id: ID
+    chat: String
+    sentBy: String
+    roomID: String
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -16,12 +22,14 @@ const typeDefs = gql`
 
   type Query {
     username: User
+    chats: [Chat]
   }
 
   type Mutation {
+    saveChat(chat: String!, sentBy: String!, roomID: String!): Chat
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    }
+  }
 `;
 
 module.exports = typeDefs;
