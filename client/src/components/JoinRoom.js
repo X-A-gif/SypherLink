@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 import { useState } from 'react';
 import ChatRoom from './ChatRoom.js';
-import Sidebar from './SideBar.js';
+import SideBar from './SideBar.js';
 
 // Connecting the front end to the back end
 const socket = io.connect('http://localhost:3001');
@@ -28,6 +28,7 @@ export default function App () {
   return(
     
     <div className='App h-screen bg-slate-900 flex justify-center items-center'>
+      <SideBar />
   {!showChat ? (
     <div className='join-chat-container w-2/5 mx-auto bg-transparent rounded-lg shadow-md backdrop-filter backdrop-blur-sm border border-white border-opacity-20'>
       <h3 className='text-center text-white uppercase rounded text-2xl tracking-wider mt-8'>Join A Chat Room</h3>

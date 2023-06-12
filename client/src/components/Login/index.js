@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate from React
 import Logo from '../../assets/test-sypherlink-logo.svg'; //Logo
 import Auth from "../../utils/auth.js";
 import JoinRoom from "../JoinRoom.js";
+import SideBar from "../SideBar.js";
 
 const Login = () => {
   const navigate = useNavigate(); // Create a navigate function
